@@ -1,5 +1,5 @@
 // API Configuration
-const API_URL = 'http://localhost:8000';
+const API_URL = 'https://heart-disease-api-bbd4.onrender.com';
 const API_ENDPOINT = `${API_URL}/predict`;
 
 // DOM Elements
@@ -68,7 +68,6 @@ function validateForm(data) {
 
 // Show error toast
 function showError(message) {
-    // Create error toast element
     const toast = document.createElement('div');
     toast.className = 'error-toast';
     toast.innerHTML = `
@@ -77,7 +76,6 @@ function showError(message) {
         <i class="fas fa-times close-toast"></i>
     `;
     
-    // Style the toast
     toast.style.cssText = `
         position: fixed;
         bottom: 20px;
@@ -96,12 +94,10 @@ function showError(message) {
     
     document.body.appendChild(toast);
     
-    // Add close functionality
     toast.querySelector('.close-toast').addEventListener('click', () => {
         toast.remove();
     });
     
-    // Auto remove after 5 seconds
     setTimeout(() => {
         if (toast.parentNode) toast.remove();
     }, 5000);
@@ -109,7 +105,6 @@ function showError(message) {
 
 // Update UI based on prediction
 function updateUI(result) {
-    // Update prediction status
     if (result.prediction === 1) {
         predictionStatus.className = 'prediction-status positive';
         predictionStatus.innerHTML = `
@@ -124,22 +119,15 @@ function updateUI(result) {
         `;
     }
     
-    // Update risk level badge
     riskLevelBadge.className = `risk-badge ${result.risk_level.toLowerCase().replace(' ', '-')}`;
     riskLevelBadge.textContent = result.risk_level;
     
-    // Update probability bar
     const diseaseProbability = result.probability * 100;
     probabilityBar.style.width = `${diseaseProbability}%`;
     
-    // Update probability values
     probNoDisease.textContent = `${(result.probability_no_disease * 100).toFixed(1)}%`;
     probDisease.textContent = `${diseaseProbability.toFixed(1)}%`;
-    
-    // Update confidence
     confidenceValue.textContent = `${(result.confidence * 100).toFixed(1)}%`;
-    
-    // Update message
     messageText.textContent = result.message;
 }
 
@@ -212,7 +200,6 @@ async function predictHeartDisease(formData) {
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    // Collect form data
     const formData = {
         age: document.getElementById('age').value,
         sex: document.getElementById('sex').value,
@@ -229,30 +216,20 @@ form.addEventListener('submit', async (e) => {
         thallium: document.getElementById('thallium').value
     };
     
-    // Validate form data
     const errors = validateForm(formData);
     if (errors.length > 0) {
         showError(errors[0]);
         return;
     }
     
-    // Show loading animation
     showLoading();
     
     try {
-        // Make API call
         const result = await predictHeartDisease(formData);
-        
-        // Update UI with results
         updateUI(result);
-        
-        // Hide loading and show results
         hideLoading();
-        
-        // Scroll to results
         scrollToResults();
         
-        // Add success animation to results card
         resultsCard.style.transform = 'scale(1.02)';
         setTimeout(() => {
             resultsCard.style.transform = '';
@@ -265,7 +242,7 @@ form.addEventListener('submit', async (e) => {
     }
 });
 
-// Add input validation on blur with visual feedback
+// Add input validation on blur
 const inputs = document.querySelectorAll('input, select');
 inputs.forEach(input => {
     input.addEventListener('blur', () => {
@@ -284,15 +261,19 @@ inputs.forEach(input => {
 // Check API health on page load
 async function checkAPIHealth() {
     try {
+        console.log(`Checking API health at: ${API_URL}/health`);
         const response = await fetch(`${API_URL}/health`);
         if (response.ok) {
-            console.log('API is healthy');
+            const data = await response.json();
+            console.log('API is healthy:', data);
         } else {
-            showError('Backend API is not responding. Please start the server.');
+            console.warn('API health check failed:', response.status);
+            showError('Backend API is not responding. Please try again later.');
         }
     } catch (error) {
         console.error('API health check failed:', error);
-        showError('Cannot connect to backend server. Please ensure the server is running on port 8000.');
+        // Don't show error on page load, just log it
+        console.warn('Cannot connect to backend server. Make sure API is deployed.');
     }
 }
 
@@ -300,18 +281,19 @@ async function checkAPIHealth() {
 document.addEventListener('DOMContentLoaded', () => {
     checkAPIHealth();
     
-    // Add animation to form card
     const formCard = document.querySelector('.form-card');
-    formCard.style.opacity = '0';
-    formCard.style.transform = 'translateY(20px)';
-    setTimeout(() => {
-        formCard.style.transition = 'all 0.5s ease';
-        formCard.style.opacity = '1';
-        formCard.style.transform = 'translateY(0)';
-    }, 100);
+    if (formCard) {
+        formCard.style.opacity = '0';
+        formCard.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            formCard.style.transition = 'all 0.5s ease';
+            formCard.style.opacity = '1';
+            formCard.style.transform = 'translateY(0)';
+        }, 100);
+    }
 });
 
-// Add CSS for error toast animation
+// Add CSS for animations
 const style = document.createElement('style');
 style.textContent = `
     @keyframes slideIn {
@@ -322,17 +304,6 @@ style.textContent = `
         to {
             transform: translateX(0);
             opacity: 1;
-        }
-    }
-    
-    @keyframes slideOut {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(100%);
-            opacity: 0;
         }
     }
     
