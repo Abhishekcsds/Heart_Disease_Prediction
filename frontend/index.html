@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Prediction System | AI-Powered Health Risk Assessment</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>HeartCare AI</span>
+            </div>
+            <h1 class="title">
+                <i class="fas fa-heart medical-icon"></i>
+                Heart Disease Prediction System
+                <i class="fas fa-stethoscope medical-icon"></i>
+            </h1>
+            <p class="subtitle">
+                Advanced Machine Learning for Early Detection | Powered by Random Forest Algorithm
+            </p>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-grid">
+            <!-- Input Form -->
+            <div class="form-card">
+                <div class="card-header">
+                    <i class="fas fa-notes-medical"></i>
+                    <h2>Patient Medical Data</h2>
+                </div>
+                
+                <form id="predictionForm">
+                    <div class="form-grid">
+                        <!-- Age -->
+                        <div class="input-group">
+                            <label><i class="fas fa-calendar-alt"></i> Age <span class="required">*</span></label>
+                            <input type="number" id="age" name="age" placeholder="e.g., 55" min="1" max="120" required>
+                            <small>Years (1-120)</small>
+                        </div>
+
+                        <!-- Sex -->
+                        <div class="input-group">
+                            <label><i class="fas fa-venus-mars"></i> Sex <span class="required">*</span></label>
+                            <select id="sex" name="sex" required>
+                                <option value="">Select</option>
+                                <option value="0">Female (0)</option>
+                                <option value="1">Male (1)</option>
+                            </select>
+                            <small>0 = Female, 1 = Male</small>
+                        </div>
+
+                        <!-- Chest Pain Type -->
+                        <div class="input-group">
+                            <label><i class="fas fa-lungs"></i> Chest Pain Type <span class="required">*</span></label>
+                            <select id="chestPain" name="chestPain" required>
+                                <option value="">Select</option>
+                                <option value="1">1 - Typical Angina</option>
+                                <option value="2">2 - Atypical Angina</option>
+                                <option value="3">3 - Non-anginal Pain</option>
+                                <option value="4">4 - Asymptomatic</option>
+                            </select>
+                        </div>
+
+                        <!-- Resting BP -->
+                        <div class="input-group">
+                            <label><i class="fas fa-tachometer-alt"></i> Resting BP <span class="required">*</span></label>
+                            <input type="number" id="bp" name="bp" placeholder="e.g., 120" min="50" max="250" required>
+                            <small>mm Hg (50-250)</small>
+                        </div>
+
+                        <!-- Cholesterol -->
+                        <div class="input-group">
+                            <label><i class="fas fa-flask"></i> Cholesterol <span class="required">*</span></label>
+                            <input type="number" id="cholesterol" name="cholesterol" placeholder="e.g., 240" min="100" max="600" required>
+                            <small>mg/dl (100-600)</small>
+                        </div>
+
+                        <!-- FBS over 120 -->
+                        <div class="input-group">
+                            <label><i class="fas fa-tint"></i> FBS over 120 <span class="required">*</span></label>
+                            <select id="fbs" name="fbs" required>
+                                <option value="">Select</option>
+                                <option value="0">0 - No (≤ 120 mg/dl)</option>
+                                <option value="1">1 - Yes (> 120 mg/dl)</option>
+                            </select>
+                        </div>
+
+                        <!-- EKG Results -->
+                        <div class="input-group">
+                            <label><i class="fas fa-heartbeat"></i> EKG Results <span class="required">*</span></label>
+                            <select id="ekg" name="ekg" required>
+                                <option value="">Select</option>
+                                <option value="0">0 - Normal</option>
+                                <option value="1">1 - ST-T Abnormality</option>
+                                <option value="2">2 - Left Ventricular Hypertrophy</option>
+                            </select>
+                        </div>
+
+                        <!-- Max Heart Rate -->
+                        <div class="input-group">
+                            <label><i class="fas fa-heart"></i> Max Heart Rate <span class="required">*</span></label>
+                            <input type="number" id="maxHr" name="maxHr" placeholder="e.g., 150" min="60" max="220" required>
+                            <small>bpm (60-220)</small>
+                        </div>
+
+                        <!-- Exercise Angina -->
+                        <div class="input-group">
+                            <label><i class="fas fa-running"></i> Exercise Angina <span class="required">*</span></label>
+                            <select id="exerciseAngina" name="exerciseAngina" required>
+                                <option value="">Select</option>
+                                <option value="0">0 - No</option>
+                                <option value="1">1 - Yes</option>
+                            </select>
+                            <small>Exercise-induced chest pain</small>
+                        </div>
+
+                        <!-- ST Depression -->
+                        <div class="input-group">
+                            <label><i class="fas fa-chart-line"></i> ST Depression <span class="required">*</span></label>
+                            <input type="number" id="stDepression" name="stDepression" placeholder="e.g., 1.5" step="0.1" min="0" max="10" required>
+                            <small>0-10 (higher = worse)</small>
+                        </div>
+
+                        <!-- Slope of ST -->
+                        <div class="input-group">
+                            <label><i class="fas fa-sliders-h"></i> Slope of ST <span class="required">*</span></label>
+                            <select id="slope" name="slope" required>
+                                <option value="">Select</option>
+                                <option value="1">1 - Upsloping</option>
+                                <option value="2">2 - Flat</option>
+                                <option value="3">3 - Downsloping</option>
+                            </select>
+                        </div>
+
+                        <!-- Number of Vessels -->
+                        <div class="input-group">
+                            <label><i class="fas fa-chart-simple"></i> Number of Vessels <span class="required">*</span></label>
+                            <select id="vessels" name="vessels" required>
+                                <option value="">Select</option>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                            <small>Major vessels colored by fluoroscopy</small>
+                        </div>
+
+                        <!-- Thallium -->
+                        <div class="input-group">
+                            <label><i class="fas fa-microscope"></i> Thallium <span class="required">*</span></label>
+                            <select id="thallium" name="thallium" required>
+                                <option value="">Select</option>
+                                <option value="3">3 - Normal</option>
+                                <option value="6">6 - Fixed Defect</option>
+                                <option value="7">7 - Reversible Defect</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="predict-btn" id="predictBtn">
+                        <i class="fas fa-brain"></i>
+                        <span>Predict Heart Disease Risk</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Results Card -->
+            <div class="results-card" id="resultsCard">
+                <div class="card-header">
+                    <i class="fas fa-chart-bar"></i>
+                    <h2>Prediction Results</h2>
+                </div>
+                
+                <div class="loading-container" id="loadingContainer" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Analyzing patient data...</p>
+                </div>
+                
+                <div id="resultsContent" style="display: none;">
+                    <!-- Prediction Status -->
+                    <div class="prediction-status" id="predictionStatus">
+                        <i class="fas fa-check-circle"></i>
+                        <span id="statusText">No Risk Detected</span>
+                    </div>
+                    
+                    <!-- Risk Level -->
+                    <div class="risk-section">
+                        <h3>Risk Level</h3>
+                        <div class="risk-level" id="riskLevel">
+                            <span class="risk-badge low">Low</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Probability Score -->
+                    <div class="probability-section">
+                        <h3>Probability Analysis</h3>
+                        <div class="probability-bar-container">
+                            <div class="probability-bar" id="probabilityBar" style="width: 0%;"></div>
+                        </div>
+                        <div class="probability-values">
+                            <span>⬤ No Disease: <strong id="probNoDisease">0%</strong></span>
+                            <span>⬤ Disease Present: <strong id="probDisease">0%</strong></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Confidence Score -->
+                    <div class="confidence-section">
+                        <h3>Model Confidence</h3>
+                        <div class="confidence-value" id="confidenceValue">0%</div>
+                    </div>
+                    
+                    <!-- Message -->
+                    <div class="message-section" id="messageSection">
+                        <i class="fas fa-info-circle"></i>
+                        <p id="messageText">Prediction results will appear here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <i class="fas fa-robot"></i> 
+                Powered by Random Forest Machine Learning | 
+                <i class="fas fa-chart-line"></i> 
+                Accuracy: ~85% | 
+                <i class="fas fa-shield-alt"></i> 
+                For informational purposes only
+            </p>
+            <p class="disclaimer">
+                ⚠️ This is a predictive tool and not a substitute for professional medical advice. 
+                Always consult with a healthcare provider for medical decisions.
+            </p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

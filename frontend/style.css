@@ -1,0 +1,466 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #e74c3c;
+    --primary-dark: #c0392b;
+    --secondary: #2c3e50;
+    --success: #27ae60;
+    --warning: #f39c12;
+    --danger: #e74c3c;
+    --info: #3498db;
+    --light: #ecf0f1;
+    --dark: #2c3e50;
+    --white: #ffffff;
+    --gray: #95a5a6;
+    --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-heart: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    --shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    color: var(--dark);
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header Styles */
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 20px;
+}
+
+.logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: var(--gradient-heart);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+}
+
+.logo i {
+    background: var(--gradient-heart);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 2rem;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.medical-icon {
+    font-size: 2rem;
+    background: var(--gradient-heart);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    color: var(--gray);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Main Grid */
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+/* Card Styles */
+.form-card, .results-card {
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-card:hover, .results-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+.card-header {
+    background: var(--gradient);
+    padding: 20px 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.card-header i {
+    font-size: 1.5rem;
+    color: var(--white);
+}
+
+.card-header h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--white);
+}
+
+/* Form Styles */
+.form-grid {
+    padding: 25px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--secondary);
+}
+
+.input-group label i {
+    margin-right: 6px;
+    color: var(--primary);
+}
+
+.required {
+    color: var(--danger);
+    font-size: 0.8rem;
+}
+
+.input-group input, .input-group select {
+    padding: 12px 15px;
+    border: 2px solid var(--light);
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    background: var(--white);
+}
+
+.input-group input:focus, .input-group select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+}
+
+.input-group input:hover, .input-group select:hover {
+    border-color: var(--primary-dark);
+}
+
+.input-group small {
+    font-size: 0.7rem;
+    color: var(--gray);
+}
+
+/* Predict Button */
+.predict-btn {
+    width: calc(100% - 50px);
+    margin: 0 25px 25px 25px;
+    padding: 15px;
+    background: var(--gradient-heart);
+    color: var(--white);
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.predict-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+    box-shadow: 0 10px 20px rgba(231, 76, 60, 0.3);
+}
+
+.predict-btn:active {
+    transform: translateY(0);
+}
+
+.predict-btn i {
+    font-size: 1.1rem;
+}
+
+/* Results Card */
+.results-card {
+    min-height: 500px;
+}
+
+.results-card .card-header {
+    background: var(--gradient-heart);
+}
+
+#resultsContent {
+    padding: 25px;
+}
+
+/* Loading Animation */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    gap: 20px;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid var(--light);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-container p {
+    color: var(--gray);
+    font-weight: 500;
+}
+
+/* Prediction Status */
+.prediction-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.prediction-status.positive {
+    background: linear-gradient(135deg, #ff6b6b20, #ee5a5a20);
+    color: var(--danger);
+    border: 1px solid var(--danger);
+}
+
+.prediction-status.negative {
+    background: linear-gradient(135deg, #27ae6020, #2ecc7120);
+    color: var(--success);
+    border: 1px solid var(--success);
+}
+
+.prediction-status i {
+    font-size: 1.5rem;
+}
+
+/* Risk Section */
+.risk-section, .probability-section, .confidence-section {
+    margin-bottom: 25px;
+}
+
+.risk-section h3, .probability-section h3, .confidence-section h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--gray);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.risk-level {
+    text-align: center;
+}
+
+.risk-badge {
+    display: inline-block;
+    padding: 8px 25px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.risk-badge.low {
+    background: #27ae6020;
+    color: #27ae60;
+    border: 1px solid #27ae60;
+}
+
+.risk-badge.moderate {
+    background: #f39c1220;
+    color: #f39c12;
+    border: 1px solid #f39c12;
+}
+
+.risk-badge.high {
+    background: #e74c3c20;
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+}
+
+.risk-badge.very-high {
+    background: #c0392b20;
+    color: #c0392b;
+    border: 1px solid #c0392b;
+}
+
+/* Probability Bar */
+.probability-bar-container {
+    background: var(--light);
+    border-radius: 10px;
+    height: 30px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.probability-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #e74c3c, #c0392b);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    width: 0%;
+}
+
+.probability-values {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+}
+
+.probability-values span:first-child {
+    color: var(--success);
+}
+
+.probability-values span:last-child {
+    color: var(--danger);
+}
+
+/* Confidence Section */
+.confidence-value {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    background: var(--gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Message Section */
+.message-section {
+    background: var(--light);
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+.message-section i {
+    font-size: 1.2rem;
+    color: var(--info);
+}
+
+.message-section p {
+    flex: 1;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--secondary);
+}
+
+/* Footer */
+.footer {
+    margin-top: 50px;
+    text-align: center;
+    padding: 25px;
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+}
+
+.footer p {
+    color: var(--gray);
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+}
+
+.disclaimer {
+    font-size: 0.75rem;
+    color: #999;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .title {
+        font-size: 1.5rem;
+    }
+    
+    .container {
+        padding: 15px;
+    }
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+/* Form Validation Styles */
+.input-group input:invalid:focus, .input-group select:invalid:focus {
+    border-color: var(--danger);
+}
+
+/* Smooth Transitions */
+* {
+    transition: all 0.2s ease;
+}
